@@ -127,6 +127,7 @@ class BaseObject(BaseEndpoint, BaseAPIJSONObject):
             response_object=response,
         )
 
+    @api_call
     def delete(self, params=None, headers=None):
         """ Delete the object.
 
@@ -212,14 +213,10 @@ class BaseObject(BaseEndpoint, BaseAPIJSONObject):
             if current_index >= response['total_count']:
                 break
 
-    def as_user(self, user):
-        """ Base class override. """
-        return self.__class__(self._session.as_user(user), self._object_id, self._response_object)
-
-    def with_shared_link(self, shared_link, shared_link_password):
+    def clone(self, session=None):
         """ Base class override. """
         return self.__class__(
-            self._session.with_shared_link(shared_link, shared_link_password),
+            session or self._session,
             self._object_id,
             self._response_object,
         )

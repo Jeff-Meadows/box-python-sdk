@@ -5,6 +5,7 @@ from __future__ import unicode_literals, absolute_import
 import json
 
 from .base_endpoint import BaseEndpoint
+from ..util.api_call_decorator import api_call
 from ..util.translator import Translator
 
 
@@ -156,6 +157,7 @@ class Search(BaseEndpoint):
         """
         return MetadataSearchFilter(template_key, scope)
 
+    @api_call
     def search(
             self,
             query,

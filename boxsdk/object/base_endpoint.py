@@ -2,8 +2,10 @@
 
 from __future__ import unicode_literals, absolute_import
 
+from .cloneable import Cloneable
 
-class BaseEndpoint(object):
+
+class BaseEndpoint(Cloneable):
     """A Box API endpoint."""
 
     def __init__(self, session, **kwargs):
@@ -47,7 +49,7 @@ class BaseEndpoint(object):
         :type user:
             :class:`User`
         """
-        return self.__class__(self._session.as_user(user))
+        return self.clone(self._session.as_user(user))
 
     def with_shared_link(self, shared_link, shared_link_password):
         """
@@ -62,4 +64,15 @@ class BaseEndpoint(object):
         :type shared_link_password:
             `unicode`
         """
-        return self.__class__(self._session.with_shared_link(shared_link, shared_link_password))
+        return self.clone(self._session.with_shared_link(shared_link, shared_link_password))
+
+    def clone(self, session=None):
+        """
+        Returns a copy of this endpoint object using the specified session.
+
+        :param session:
+            The Box session used to make requests.
+        :type session:
+            :class:`BoxSession`
+        """
+        return self.__class__(session or self._session)

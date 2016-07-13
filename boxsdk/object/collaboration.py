@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 
 from boxsdk.object.base_object import BaseObject
+from ..util.api_call_decorator import api_call
 from boxsdk.util.text_enum import TextEnum
 
 
@@ -32,6 +33,7 @@ class Collaboration(BaseObject):
     _item_type = 'collaboration'
 
     # pylint:disable=arguments-differ
+    @api_call
     def update_info(self, role=None, status=None):
         """Edit an existing collaboration on Box
 
